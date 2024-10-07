@@ -23,5 +23,3 @@ yarn-error.log*
 # webstorm settings and dictionaries
 .idea
 
-# package lock
-package-lock.json
