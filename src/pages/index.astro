@@ -9,64 +9,46 @@ import ContentMedia from '../components/ContentMedia.astro'
 <DefaultLayout title="Home">
   <Hero />
   <section class="my-64">
-    <div class="container">
-      <h2 class="mb-16 text-6xl">Features</h2>
-      <div class="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
-        <Feature icon="mdi:tailwind" title="Tailwind CSS">
-          Use the power of Tailwind to greatly improve your productivity and enhance your developer workflow.
-        </Feature>
-        <Feature icon="mdi:wheelchair-accessibility" title="a11y Components">
-          17 components and counting, all tried and tested for the most optimal accessible experience for your visitors.
-        </Feature>
-        <Feature icon="mdi:looks" title="Prettier">
-          Less worry about formatting your code, let the Astro Prettier integration do the heavy lifting.
-        </Feature>
-        <Feature icon="mdi:eslint" title="ESLint">
-          Lint your code with strict a11y settings to ensure you stay on track with the WCAG standards.
-        </Feature>
-        <Feature icon="mdi:book-open-page-variant" title="Blog">
-          This theme comes with a fully integrated blog, dynamic pages and SEO optimization.
-        </Feature>
-        <Feature icon="mdi:language-markdown" title="Markdown & MDX">
-          Easily use .md and .mdx pages to build your websites or use it with Netlify CMS.
-        </Feature>
-        <Feature icon="mdi:theme-light-dark" title="Dark mode">
-          Fully integrated Dark mode gives your users the choice for their favorite viewing mode.
-        </Feature>
-        <Feature icon="mdi:cog" title="Design System">
-          The theme offers some very handy utilities to help you build your website faster.
-        </Feature>
-        <Feature icon="mdi:lighthouse" title="Lighthouse Scores">
-          Excellent lighthouse scores means your website will load faster and get better SEO rankings.
-        </Feature>
-      </div>
-    </div>
-  </section>
-  <ContentMedia imgSrc="/accessible-components.webp">
-    <h2>Accessible Components</h2>
-    <p class="text-2xl">
-      This theme provides plenty of tried and tested Accessible Astro Components. Some are native to this theme and a
-      lot of others are integrated using a <a href="https://github.com/markteekman/accessible-astro-components"
-        >separate package</a
-      >. They'll get you up and running in building an accessible solution for your visitors.
-    </p>
-  </ContentMedia>
-  <ContentMedia imgSrc="/wcag-compliant.webp" reverseImg={true}>
-    <h2>WCAG 2.1 AA Compliant</h2>
-    <p class="text-2xl">
-      Using semantic HTML, landmarks, skip links, screen reader friendly content, aria-labels, keyboard accessible
-      navigation and components, clear outlines and tab indicators and the right color contrast, you're more certain of
-      reaching WCAG AA compliance.
-    </p>
-  </ContentMedia>
-  <section class="mb-32 mt-64">
-    <div class="container">
-      <h2 class="mb-16 text-6xl">Counters</h2>
-      <div class="grid grid-cols-1 gap-12 sm:grid-cols-2 md:grid-cols-4">
-        <Counter count="520" title="Stars" sub="On GitHub" />
-        <Counter count="17" title="Accessible" sub="Components" />
-        <Counter count="500" title="Commits" sub="Merged" />
-        <Counter count="18+" title="Months" sub="Since launch" />
+    <div class="container" id="learning-rust">
+      <h3 class="mb-1 mt-2 text-4xl">Roadmap From Beginner to Advanced Level</h3>
+      <span class="text-1xl">A curated collection of materials designed to assist learners at various stages of their journey with the Rust.</span>
+      <div class="mt-2 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
+<Feature link="rust-tutorial#level-beginner" icon="mdi:baby-face" title="Level: Beginner">
+  Discover beginner-friendly resources to build a solid foundation in Rust, including essential books and tutorials.
+</Feature>
+
+<Feature link="rust-tutorial#level-intermediate" icon="mdi:account-school-outline" title="Level: Intermediate">
+  What to do once you learned basics? Explore intermediate materials that enhance your Rust skills.
+</Feature>
+
+<Feature link="rust-tutorial#level-advanced" icon="mdi:magic-staff" title="Level: Advanced">
+  Dive into advanced concepts and techniques in Rust, covering systems programming and other.
+</Feature>
+
+<Feature link="rust-tutorial#blog-posts" icon="mdi:book-open-page-variant" title="Blog Posts">
+  Access insightful blog posts on various Rust topics, featuring tutorials and the latest developments in the ecosystem.
+</Feature>
+
+
+<Feature link="rust-tutorial#curated-list" icon="mdi:clipboard-list" title="Curated List">
+  Browse a curated selection of high-quality resources for embedded Rust programming, ideal for all developers.
+</Feature>
+
+<Feature link="rust-tutorial#rust-language-cheat-sheet" icon="mdi:clipboard-text" title="Rust Cheat Sheet">
+  Utilize a handy cheat sheet summarizing key Rust concepts and syntax for quick reference.
+</Feature>
+
+<Feature link="rust-tutorial#dark-arts-of-rust" icon="mdi:skull" title="Dark Arts of Rust">
+  Explore Unsafe Rust with the Rustonomicon, delving into the intricacies of low-level programming and safety.
+</Feature>
+
+<Feature link="rust-tutorial#youtube-channels-on-rust" icon="mdi:youtube" title="Youtube Channels">
+  Discover engaging YouTube channels offering tutorials and tips from experienced Rust developers for enhanced learning.
+</Feature>
+<Feature link="rust-tutorial#reverse-engineering" icon="mdi:tools" title="Reverse Engineering">
+  Learn about resources for reverse engineering Rust binaries.
+</Feature>
+
       </div>
     </div>
   </section>

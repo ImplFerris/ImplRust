@@ -1,9 +1,9 @@
 {
-  "name": "accessible-astro-starter",
-  "description": "An Accessible Starter Theme for Astro including several accessibility features and tools to help you build faster.",
+  "name": "implrust",
+  "description": "Impl Rust website source code",
   "version": "3.1.2",
-  "author": "Mark Teekman",
-  "homepage": "https://accessible-astro.netlify.app/",
+  "author": "ImplFerris",
+  "homepage": "https://implrust.com/",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",

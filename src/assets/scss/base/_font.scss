@@ -51,7 +51,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 
-  a:not(.button) {
+  a:not(.button):not(.feature-link) {
     color: var(--action-color);
     text-decoration: underline;
 
@@ -63,6 +63,12 @@ body {
     &:focus {
       color: var(--action-color-state);
       text-decoration: none;
+    }
+  }
+
+  .feature-link{
+    &:hover{
+      color: var(--action-color);
     }
   }
 
