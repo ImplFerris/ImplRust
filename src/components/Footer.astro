@@ -1,0 +1,16 @@
+---
+import CallToAction from './CallToAction.astro'
+
+const currentYear = new Date().getFullYear()
+---
+
+<footer>
+  <CallToAction />
+  <section class="py-8">
+    <div class="container">
+      <p>
+        ImplRust &copy; {currentYear} - This is unofficial site (It's not affiliated with the Rust Foundation)
+      </p>
+    </div>
+  </section>
+</footer>
