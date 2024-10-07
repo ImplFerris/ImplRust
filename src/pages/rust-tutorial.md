@@ -40,7 +40,7 @@ a curated collection of materials designed to assist learners at various stages 
   - **[Build A Full Stack Chatbot in Rust (feat. Leptos & Rustformers)](https://youtu.be/vAjle3c9Xqc?si=uN1sM48VDOtBglNQ)** : A walkthrough of building a ChatGPT clone using Rust on the frontend and the backend. Quick introduction to the Leptos framework, Rustformers/llm, and open source language models.
 
 ### Other Resources
-  - [**Introduction to "Safe and Secure Coding in Rust: A Comparative Analysis of Rust and C/C++"](https://luk6xff.github.io/other/safe_secure_rust_book/#introduction-to-safe-and-secure-coding-in-rust-a-comparative-analysis-of-rust-and-cc)
+  - **[Introduction to "Safe and Secure Coding in Rust: A Comparative Analysis of Rust and C/C++"](https://luk6xff.github.io/other/safe_secure_rust_book/#introduction-to-safe-and-secure-coding-in-rust-a-comparative-analysis-of-rust-and-cc)**
 
 ### Other Project based tutorials
   - **[Solving distributed systems challenges in Rust](https://www.youtube.com/watch?v=gboGyccRVXI&t=1038s)** : In this stream we work through the fly.io distributed systems challenges (https://fly.io/dist-sys/) in Rust, and solve all the way up to challenge 3c.
