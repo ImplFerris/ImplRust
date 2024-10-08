@@ -4,7 +4,7 @@ import { Icon } from 'astro-icon/components'
 const { icon = 'mdi:rocket', title = 'Title', link="#" } = Astro.props
 ---
 
-<a class="no-underline feature-link" {...(link && { href: link })}>
+<a class="no-underline feature-link" target="_blank" {...(link && { href: link })}>
   <div class="feature flex flex-col gap-4">
     <Icon name={icon} />
     <div class="content">
