@@ -51,7 +51,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 
-  a:not(.button):not(.feature-link) {
+  a:not(.button):not(.feature-link):not(.disable-href-style) {
     color: var(--action-color);
     text-decoration: underline;
 
