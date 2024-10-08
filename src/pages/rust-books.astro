@@ -4,10 +4,11 @@ import Book from '../components/Book.astro'
 ---
 
 
-<DefaultLayout title="Rust Books">
+<DefaultLayout title="Free and Paid Rust Books">
+  
   <section class="my-12">
     <div class="container">
-      <h1 class="text-center">Free Rust Books</h1>
+      <h1 class="text-center">Beginners Books to Learn Rust</h1>
     </div>
   </section>
   <section class="my-12">
@@ -18,7 +19,7 @@ import Book from '../components/Book.astro'
           imgSrc="/images/books/default-book.jpg"
           imgAlt="Official Rust Book" 
           title="The Rust Programming Language"
-          description={`This is official book maintained by Rust community (www.rust-lang.org).
+          description={`This is the official book maintained by Rust community (www.rust-lang.org).
           <br/><br/>The Rust Programming Language, an introductory book about. This is must read book`}
           link="https://doc.rust-lang.org/book/"
           linkText="Read"
@@ -34,16 +35,18 @@ import Book from '../components/Book.astro'
           linkText="Read"
         />
       </div>
+      
       <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/4">
         <Book 
-          imgSrc="/images/books/rust-atomics.jpg"
-          imgAlt="Rust Atomics and Locks" 
-          title="Rust Atomics and Locks"
+          imgSrc="/images/books/rust-in-action.jpg"
+          imgAlt="" 
+          title="Rust In Action"
           description={`
-          This book is primarily for Rust developers who want to learn about low-level concurrency. <br/><br/> You can buy A printed and ebook version of this book is published by O'Reilly or you can read it online.
+          Rust in Action introduces the Rust programming language by exploring numerous systems programming concepts and techniques.
+          <br/><br/>You'll be learning Rust by delving into how computers work under the hood.
           `}
-          link="https://marabos.nl/atomics/"
-          linkText="Read"
+          link="https://www.manning.com/books/rust-in-action"
+          linkText="Get"
         />
       </div>
     </div>
@@ -52,38 +55,122 @@ import Book from '../components/Book.astro'
 
   <section class="my-12">
     <div class="container">
-      <h1 class="text-center">Other Rust Books</h1>
+      <h1 class="text-center">Intermediate Rust Books</h1>
     </div>
   </section>
   <section class="my-12">
-  <div class="space-content container mx-auto p-4">
-    <div class="flex flex-wrap justify-center gap-3">
-      <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/4"> 
-        <Book 
-          imgSrc="/images/books/zero2prod.jpg"
-          imgAlt="" 
-          title="Zero2Prod"
-          description={`Zero To Production is the ideal starting point for your journey as a Rust backend developer.
-<br/><br/>You will learn by doing: you will build a fully functional email newsletter API, starting from scratch.`}
-          link="https://www.zero2prod.com/"
-          linkText="Get"
-        />
-      </div>
+    <div class="space-content container mx-auto p-4">
+      <div class="flex flex-wrap justify-center gap-3">
+        <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/4"> 
+          <Book 
+            imgSrc="/images/books/zero2prod.jpg"
+            imgAlt="" 
+            title="Zero2Prod"
+            description={`Zero To Production is the ideal starting point for your journey as a Rust backend developer.
+  <br/><br/>You will learn by doing: you will build a fully functional email newsletter API, starting from scratch.`}
+            link="https://www.zero2prod.com/"
+            linkText="Get"
+          />
+        </div>
 
-      <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/4">
-        <Book 
-          imgSrc="/images/books/programming-rust.jpg"
-          imgAlt="" 
-          title="Programming Rust, 2nd Edition"
-          description={`
-          Jim Blandy, Jason Orendorff, and Leonora Tindall demonstrate how Rust's features put programmers in control over memory consumption and processor use by combining predictable performance with memory safety and trustworthy concurrency.
-          `}
-          link="https://www.oreilly.com/library/view/programming-rust-2nd/9781492052586/"
-          linkText="Read"
-        />
+        <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/4"> 
+          <Book 
+            imgSrc="/images/books/rust-web-programming.jpg"
+            imgAlt="" 
+            title="Rust Web Programming"
+            description={`A hands-on guide to developing, packaging, and deploying fully functional Rust web applications.
+            <br/><br/>
+            You’ll get hands-on with implementing emerging Rust web frameworks, including Actix, Rocket, and Hyper.
+            `}
+            link="https://www.packtpub.com/en-us/product/rust-web-programming-9781803234694"
+            linkText="Get"
+          />
+        </div>
+
+        <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/4"> 
+          <Book 
+            imgSrc="/images/books/cmd-line-rust.jpg"
+            imgAlt="" 
+            title="Command-Line Rust"
+            description={`This guide teaches Rust using a single small, complete, focused program in each chapter. 
+            <br/><br/>
+            You'll learn how to handle errors in Rust, read and write files, and use regular expressions, Rust types, structs, and more.`}
+            link="https://www.oreilly.com/library/view/command-line-rust/9781098109424/"
+            linkText="Get"
+          />
+        </div>
+        <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/4">
+          <Book 
+            imgSrc="/images/books/programming-rust.jpg"
+            imgAlt="" 
+            title="Programming Rust"
+            description={`
+            Jim Blandy, Jason Orendorff, and Leonora Tindall demonstrate how Rust's features put programmers in control over memory consumption and processor use by combining predictable performance with memory safety and trustworthy concurrency.
+            `}
+            link="https://www.oreilly.com/library/view/programming-rust-2nd/9781492052586/"
+            linkText="Get"
+          />
+        </div>
+
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
+  <section class="my-12">
+    <div class="container">
+      <h1 class="text-center">Advanced Rust Books</h1>
+    </div>
+  </section>
+  <section class="my-12">
+    <div class="space-content container mx-auto p-4">
+      <div class="flex flex-wrap justify-center gap-3">
+
+        <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/4">
+          <Book 
+            imgSrc="/images/books/rust-atomics.jpg"
+            imgAlt="Rust Atomics and Locks" 
+            title="Rust Atomics and Locks"
+            description={`
+            This book is primarily for Rust developers who want to learn about low-level concurrency. <br/><br/> You can buy a printed and ebook version of this book is published by O'Reilly or You can read it online for free.
+            `}
+            link="https://marabos.nl/atomics/"
+            linkText="Read"
+          />
+        </div>
+        <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/4">
+            <Book 
+              imgSrc="/images/books/effective-rust.jpg"
+              imgAlt="" 
+              title="Effective Rust"
+              description={`
+              35 Specific Ways to Improve Your Rust Code<br/><br/>This practical guide helps you make the transition to writing idiomatic Rust—while also making full use of Rust's type system, safety guarantees, and burgeoning ecosystem.
+              `}
+              link="https://www.lurklurk.org/effective-rust/"
+              linkText="Read"
+            />
+        </div>
+
+        <div class="flex-shrink-0 w-full md:w-1/2 lg:w-1/4"> 
+          <Book 
+            imgSrc="/images/books/default-book.jpg"
+            imgAlt="" 
+            title="The Rustonomicon"
+            description="The Rustonomicon digs into all the awful details that you need to understand when writing Unsafe Rust programs."
+            link="https://doc.rust-lang.org/nightly/nomicon/"
+            linkText="Read"
+          />
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="my-12">
+    <div class="container">
+      <div>
+        Note: This list includes only the most popular Rust-related books to keep it concise. For a complete collection of available Rust books, please refer this repository. 
+        <li><a href="https://github.com/sger/RustBooks" target="_blank">List of Rust books</a></li>
+      </div>
+    </div>
+  </section>
 </DefaultLayout>
