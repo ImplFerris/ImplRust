@@ -49,6 +49,8 @@ a curated collection of materials designed to assist learners at various stages 
     
   - **[impl Rust playlist](https://www.youtube.com/playlist?list=PLqbS7AVVErFhAhQ5s9SWcvxHh4GwsIk_d)** : Different project based tutorials by Jon Gjengset including creating Git from scratch in Rust, BitTorrent client in Rust, Wordle solver in Rust
 
+  - **[hecto: Build Your Own Text Editor in Rust](https://flenker.blog/hecto/)** : This is a series of blog posts that shows you how to build a text editor in Rust.
+
 ### Free Books
   - **[The Little Book of Rust Macros](https://veykril.github.io/tlborm)** : This book is an attempt to distill the Rust community's collective knowledge of Rust macros, the Macros by Example ones as well as procedural macros(WIP).
 
