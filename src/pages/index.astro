@@ -8,11 +8,11 @@ import ContentMedia from '../components/ContentMedia.astro'
 
 <DefaultLayout title="Home">
   <Hero />
-  <section class="my-64">
+  <section class="mt-44">
     <div class="container" id="learning-rust">
       <h3 class="mb-1 mt-2 text-4xl">Roadmap From Beginner to Advanced Level</h3>
       <span class="text-1xl">A curated collection of materials designed to assist learners at various stages of their journey with the Rust.</span>
-      <div class="mt-2 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
+      <div class="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
           <Feature link="https://implrust.com/rust-tutorial#level-beginner" icon="mdi:baby-face" title="Level: Beginner">
             Discover beginner-friendly resources to build a solid foundation in Rust, including essential books and tutorials.
           </Feature>
@@ -24,15 +24,27 @@ import ContentMedia from '../components/ContentMedia.astro'
           <Feature link="https://implrust.com/rust-tutorial#level-advanced" icon="mdi:magic-staff" title="Level: Advanced">
             Dive into advanced concepts and techniques in Rust, covering systems programming and other.
           </Feature>
+      </div>
+    </div>
+  </section>
 
-          <Feature link="/rust-books" icon="mdi:tools" title="Books">
-            A curated list of free and paid Rust books, covering essential concepts and advanced topics to enhance your skills. 
+  <section class="mt-20 mb-16">
+    <div class="container" id="learning-rust">
+      <h3 class="mb-1 mt-2 text-4xl">Rust Resources</h3>
+      <span class="text-1xl">Index for other useful resources books, blog posts, youtube channels and more.</span>
+      <div class="mt-6 grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
+          
+          <Feature link="/free-rust-books" icon="mdi:book-open-page-variant" title="Free Online Books">
+            A curated list of free online books about Rust, organized by category.
           </Feature>
 
-          <Feature link="https://implrust.com/rust-tutorial#blog-posts" icon="mdi:book-open-page-variant" title="Blog Posts">
-            Access insightful blog posts on various Rust topics, featuring tutorials and the latest developments in the ecosystem.
+          <Feature link="/rust-books" icon="mdi:notebook-multiple" title="Books">
+            A curated list of free and paid Rust books, organized by level.
           </Feature>
 
+          <Feature link="https://implrust.com/rust-tutorial#blog-posts" icon="mdi:rss-box" title="Blog Posts">
+            Access insightful blog posts on various Rust topics, featuring tutorials.
+          </Feature>
 
           <Feature link="https://implrust.com/rust-tutorial#curated-list" icon="mdi:clipboard-list" title="Curated List">
             Browse a curated selection of high-quality resources for embedded Rust programming, ideal for all developers.
@@ -42,12 +54,8 @@ import ContentMedia from '../components/ContentMedia.astro'
             Utilize a handy cheat sheet summarizing key Rust concepts and syntax for quick reference.
           </Feature>
 
-          <Feature link="https://implrust.com/rust-tutorial#dark-arts-of-rust" icon="mdi:skull" title="Dark Arts of Rust">
-            Explore Unsafe Rust with the Rustonomicon, delving into the intricacies of low-level programming and safety.
-          </Feature>
-
           <Feature link="https://implrust.com/rust-tutorial#youtube-channels-on-rust" icon="mdi:youtube" title="Youtube Channels">
-            Discover engaging YouTube channels offering tutorials and tips from experienced Rust developers for enhanced learning.
+            List of popular and underrated youtube channels that covers Rust.
           </Feature>
 
       </div>

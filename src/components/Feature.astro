@@ -5,7 +5,7 @@ const { icon = 'mdi:rocket', title = 'Title', link="#" } = Astro.props
 ---
 
 <a class="no-underline feature-link" target="_blank" {...(link && { href: link })}>
-  <div class="feature flex flex-col gap-4">
+  <div class="feature flex flex-col gap-4 h-64">
     <Icon name={icon} />
     <div class="content">
       <h3>{title}</h3>

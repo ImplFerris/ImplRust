@@ -144,7 +144,8 @@ body {
         font-size: 1rem;
       }
     }
-
+  }
+  h6{
     line-height: 1.5rem;
 
     @include breakpoint(medium) {

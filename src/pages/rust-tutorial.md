@@ -1,6 +1,6 @@
 ---
 layout: ../layouts/MarkdownLayout.astro
-title: Markdown Page
+title: Rust Tutorials
 ---
 
 # List of Resources to learn Rust - Roadmap From Beginner to Advanced Level
