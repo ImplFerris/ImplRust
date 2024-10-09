@@ -103,6 +103,7 @@ This section contains resources that might contain from beginner to advanced con
 ## Rust Language Cheat Sheet
 
   - **[Rust Language Cheat Sheet](https://cheats.rs/)**: A single-page Rust resource for people who like high information density
+  - **[SpeedSheet for Rust](https://speedsheet.io/s/rust)**: This is an interactive Rust cheat sheet. Covers the core Rust programming language. Use the search to get instant answers.
 
 <br>
 
