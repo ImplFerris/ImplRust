@@ -39,6 +39,8 @@ A curated list of free online books about Rust, organized by category.
 
 ## Embedded
 - **[The Embedded Rust Book](https://docs.rust-embedded.org/book/)** :  An introductory book about using the Rust Programming Language on "Bare Metal" embedded systems, such as Microcontrollers.
+- **[impl Rust on ESP32 Book](https://esp32.implrust.com/)**: A hands on book on embedded programming with ESP32 and explore various sensors and peripherals
+- **[Pico Pico Book](https://pico.implrust.com/)**: A hands on book on embedded programming with Pico2(RP2350) and explore various sensors and peripherals
 - **[Discovery - Microbit](https://docs.rust-embedded.org/discovery/microbit/)** :  This book is an introductory course on microcontroller-based embedded systems that uses Rust as the teaching language rather than the usual C/C++.  Uses Microbit board (v1 and v2)
 - **[Discovery - STM32F3DISCOVERY](https://docs.rust-embedded.org/discovery/f3discovery/)** :  This book is an introductory course on microcontroller-based embedded systems that uses Rust as the teaching language rather than the usual C/C++. Uses STM32F3DISCOVERY board.
 - **[The Rust on ESP Book](https://docs.esp-rs.org/book/)** :  This book aims to provide a comprehensive guide on using the Rust programming language with Espressif SoCs and modules.
