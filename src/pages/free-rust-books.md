@@ -81,6 +81,11 @@ A curated list of free online books about Rust, organized by category.
 ## Machine Learning
 - **[Rust Machine Learning Book](https://rust-ml.github.io/book/)** :  The aim of this book is to demonstrate how the Rust language can be used for Machine Learning tasks.
 
+## Game Development
+
+  - **[Game development with Macroquad](https://mq.agical.se/)**: A game development guide on how to build a shoot'em up game in Rust with Macroquad.
+
+
 ## General
 - **[Effective Rust](https://www.lurklurk.org/effective-rust/)** : 35 Specific Ways to Improve Your Rust Code. This practical guide helps you make the transition to writing idiomatic Rust—while also making full use of Rust's type system, safety guarantees, and burgeoning ecosystem.
 - **[Learning Rust With Entirely Too Many Linked Lists](https://rust-unofficial.github.io/too-many-lists/index.html)** : Teach you basic and advanced Rust programming entirely by having you implement 6 linked lists
