@@ -56,6 +56,8 @@ a curated collection of materials designed to assist learners at various stages 
   
   - **[Game development with Macroquad](https://mq.agical.se/)**: A game development guide on how to build a shoot'em up game in Rust with Macroquad.
 
+  - **[Breakout game with Macroquad](https://www.youtube.com/watch?v=xQ9YTY7ZgsI&t=3m02s)**: An easy to follow along video that teaches how to create Breakout game with Macroquad
+
 ### Free Books
   - **[The Little Book of Rust Macros](https://veykril.github.io/tlborm)** : This book is an attempt to distill the Rust community's collective knowledge of Rust macros, the Macros by Example ones as well as procedural macros(WIP).
 
