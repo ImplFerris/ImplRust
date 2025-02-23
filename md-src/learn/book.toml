@@ -1,0 +1,32 @@
+[book.en]
+title = "ImplRust"
+description = "A curated collection of resources for learning Rust, including blog posts, books, and other useful materials."
+authors = ["ImplFerris"]
+# language = "en"
+
+# [language.en]
+# name = "English"
+
+# [language.pt-br]
+# name = "Português Brasileiro"
+# title = "Documentação do Dioxus"
+# description = "Introdução ao Dioxus, um framework portátil, de alto desempenho e ergonômico para criar interfaces de usuário multiplataforma em Rust."
+
+[rust]
+edition = "2018"
+
+[output.html]
+mathjax-support = true
+site-url = "/mdBook/"
+#git-repository-url = "https://github.com/DioxusLabs/dioxus/edit/main/docs/guide"
+#edit-url-template = "https://github.com/DioxusLabs/dioxus/edit/main/docs/guide/{path}"
+
+[output.html.playground]
+editable = true
+line-numbers = true
+# running examples will not work because dioxus is not a included in the playground
+runnable = false
+
+
+# [output.html.redirect]
+# "/format/config.html" = "configuration/index.html"

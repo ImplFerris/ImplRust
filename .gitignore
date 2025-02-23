@@ -1,25 +1,18 @@
-# build output
-dist
-
-# dependencies
-node_modules/
-.snowpack/
-
-# logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# environment variables
-.env
-.env.production
-
-# macOS-specific files
+/.dioxus
+/target
 .DS_Store
 
-# vscode settings and dictionaries
-.vscode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
 
-# webstorm settings and dictionaries
 .idea
 
+/pkg
+/static
+/docs
+/dist
+/dioxus_search
+/node_modules

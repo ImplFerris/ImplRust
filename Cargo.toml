@@ -1,0 +1,87 @@
+[workspace]
+resolver = "2"
+members = [
+    # Docs
+    "packages/implrust",
+    "packages/site-router",
+
+    # Include MDBook
+    "packages/include_mdbook/packages/mdbook-macro",
+    "packages/include_mdbook/packages/use-mdbook",
+    "packages/include_mdbook/packages/mdbook-shared",
+    "packages/include_mdbook/packages/syntect-html",
+    "packages/include_mdbook/packages/mdbook-gen",
+    "packages/include_mdbook/packages/mdbook-gen-example",
+
+    # search
+    "packages/search/search",
+    "packages/search/search-macro",
+    "packages/search/search-shared",
+]
+
+[workspace.dependencies]
+dioxus_site_router = { path = "packages/site-router" }
+stork-lib = { git = "https://github.com/dioxuslabs/stork", default-features = false }
+
+# mdbook
+mdbook-gen = { path = "packages/include_mdbook/packages/mdbook-gen" }
+use-mdbook = { path = "packages/include_mdbook/packages/use-mdbook" }
+mdbook-shared = { path = "packages/include_mdbook/packages/mdbook-shared" }
+syntect-html = { path = "packages/include_mdbook/packages/syntect-html" }
+
+# search
+dioxus-search = { path = "packages/search/search" }
+dioxus-search-macro = { path = "packages/search/search-macro" }
+dioxus-search-shared = { path = "packages/search/search-shared" }
+
+# Dioxus Release
+dioxus = "0.6.3"
+dioxus-document = "0.6.3"
+dioxus-sdk = { version = "0.6", default-features = false }
+dioxus-core = "0.6.3"
+dioxus-core-types = "0.6.3"
+dioxus-devtools = "0.6.3"
+dioxus-rsx-hotreload = "0.6.3"
+dioxus-rsx = "0.6.3"
+dioxus-html = { version = "0.6.3", default-features = false }
+dioxus-rsx-rosetta = "0.6.3"
+dioxus-autofmt = "0.6.3"
+dioxus-dx-wire-format = "0.6.3"
+dioxus-logger = "0.6.3"
+
+getrandom = { version = "0.2" }
+serde = { version = "1.0.215", features = ["derive"] }
+serde_json = "1.0.133"
+futures = "0.3.30"
+uuid = "1.8.0"
+gloo-net = { version = "0.6.0", features = ["websocket"] }
+axum = { version = "0.7.5" }
+thiserror = "2.0.4"
+yazi = "0.2.1"
+chrono = { version = "0.4.39" }
+syn = "2.0.98"
+
+[profile.release]
+lto = true
+codegen-units = 1
+opt-level = 'z'
+strip = "debuginfo"
+
+[profile.dev.build-override]
+opt-level = 3
+codegen-units = 1
+
+[profile.wasm-dev]
+inherits = "dev"
+debug = 0
+
+[profile.server-dev]
+inherits = "dev"
+debug = 0
+
+[profile.android-dev]
+inherits = "dev"
+
+[profile.release.build-override]
+opt-level = 3
+codegen-units = 1
