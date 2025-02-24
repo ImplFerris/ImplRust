@@ -4,6 +4,8 @@ pub mod footer;
 pub use footer::*;
 pub mod homepage;
 pub use homepage::*;
+pub mod resources;
+pub use resources::*;
 pub mod learn;
 pub use learn::*;
 pub mod nav;

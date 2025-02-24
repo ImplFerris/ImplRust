@@ -153,6 +153,9 @@ pub enum Route {
         #[route("/")]
         Homepage {},
 
+        #[route("/resources")]
+        Resources{},
+
         #[nest("/blog")]
             #[route("/")]
             BlogList {},
