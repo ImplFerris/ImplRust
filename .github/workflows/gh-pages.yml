@@ -14,7 +14,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
-  
+
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
@@ -47,10 +47,10 @@ jobs:
       - name: Add gh pages 404
         run: cp docs/index.html docs/404.html
       - name: Deploy 🚀
-        uses: JamesIves/github-pages-deploy-action@v4.2.3
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages # The branch the action should deploy to.
           folder: docs # The folder the action should deploy.
           target-folder: .
-          clean: true
+          # clean: true
           single-commit: true
