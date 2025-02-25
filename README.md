@@ -11,7 +11,7 @@ The docsite uses the newest Tailwind (v4) so you need to install it first and th
 
 ```sh
 cd packages/implrust
-npx @tailwindcss/cli -i ./tailwind.css -o ./assets/tailwind.css --watch
+npx @tailwindcss/cli -i ../../tailwind.css -o ./assets/tailwind.css --watch
 ```
 
 

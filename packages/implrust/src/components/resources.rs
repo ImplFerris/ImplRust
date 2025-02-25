@@ -13,14 +13,14 @@ pub(crate) fn Resources() -> Element {
 pub(crate) fn FeaturedWidgets() -> Element {
     let widgets = vec![
         (
-            "Free Online Books".to_string(),
-            "A curated list of free online books about Rust, organized by category.".to_string(),
-            "/learn/general/free-rust-books".to_string(),
-        ),
-        (
             "ImplRust Projects".to_string(),
             "Projects created by ImplRust.".to_string(),
             "https://github.com/implferris".to_string(),
+        ),
+        (
+            "Free Online Books".to_string(),
+            "A curated list of free online books about Rust, organized by category.".to_string(),
+            "/learn/general/free-rust-books".to_string(),
         ),
         (
             "Blog Posts Collection".to_string(),
