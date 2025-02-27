@@ -8,6 +8,7 @@ fn main() {
 
     make_docs("blog");
     make_docs("learn");
+    make_docs("resources");
 }
 
 fn make_docs(version: &str) {

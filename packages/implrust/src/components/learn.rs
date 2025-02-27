@@ -1,5 +1,5 @@
 use crate::*;
-use docs::{router_learn, use_current_docs_version, AnyBookRoute, CurrentDocsVersion};
+use docs::{router_learn, AnyBookRoute, CurrentDocsVersion};
 
 use mdbook_shared::SummaryItem;
 
@@ -16,17 +16,10 @@ const GITHUB_EDIT_PAGE_EDIT_URL: &str = "s://github.com/ImplFerris/ImplRust/edit
 
 #[component]
 pub(crate) fn Learn() -> Element {
-    let current_version = use_current_docs_version();
-
     rsx! {
         div { class: "w-full text-sm border-b dark:border-[#a4a9ac7d] border-gray-300",
             div { class: "flex flex-row justify-center dark:text-[#dee2e6] font-light lg:gap-12",
-                match current_version {
-                    CurrentDocsVersion::V06(_) => rsx! {
-                        GenericDocs::<router_learn::BookRoute> {}
-                    },
-
-                }
+                GenericDocs::<router_learn::BookRoute> {}
             }
         }
     }
@@ -246,28 +239,16 @@ pub fn RightNav<R: AnyBookRoute>() -> Element {
 fn Content<R: AnyBookRoute>() -> Element {
     rsx! {
         section {
-            class: "text-gray-600 dark:text-gray-300 body-font overflow-hidden container pb-12 max-w-screen-sm px-4 pt-4 md:pt-[3.125rem] grow min-h-[100vh] ",
+            class: "text-gray-600 dark:text-gray-300 body-font overflow-hidden container pb-12 max-w-screen-md px-4 pt-4 md:pt-[3.125rem] grow min-h-[100vh] ",
             class: if SHOW_SIDEBAR() { "hidden md:block" },
             div { class: "",
                 Breadcrumbs::<R> {}
-                VersionWarning {}
                 div { class: "flex w-full flex-wrap list-none",
                     article { class: "markdown-body", Outlet::<Route> {} }
                 }
                 NextPrev::<R> {}
             }
         }
-    }
-}
-
-fn VersionWarning() -> Element {
-    let current_version = use_current_docs_version();
-    // div { class: "flex flex-row items-center justify-start w-full bg-yellow-200 opacity-80 text-yellow-800 text-sm font-normal py-2 px-2 rounded-md mb-4 gap-2",
-    // crate::icons::IconWarning {}
-    // "You are currently viewing the docs for Dioxus 0.6.0 which is under construction."
-    // }
-    match current_version {
-        CurrentDocsVersion::V06(_) => rsx! {},
     }
 }
 
@@ -287,7 +268,7 @@ fn Breadcrumbs<R: AnyBookRoute>() -> Element {
         div {
             class: "flex flex-row items-center space-x-2 font-extralight pb-9",
             class: if is_index { "hidden" },
-            Link { to: R::index().global_route(), "Dioxus {long_version}" }
+            Link { to: R::index().global_route(), "{long_version}" }
             for (idx , route) in routes.iter().rev().enumerate() {
                 icons::ChevronRightIcon {}
                 Link {

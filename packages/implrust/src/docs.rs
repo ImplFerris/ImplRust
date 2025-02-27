@@ -25,10 +25,6 @@ pub fn use_try_current_docs_version() -> Option<CurrentDocsVersion> {
     }
 }
 
-pub fn use_current_docs_version() -> CurrentDocsVersion {
-    use_try_current_docs_version().expect("current docs version should be set")
-}
-
 pub trait AnyBookRoute: Routable + PartialEq + Hash + Eq + Clone + Copy {
     fn sections(&self) -> &[use_mdbook::mdbook_shared::Section];
     fn page(&self) -> &use_mdbook::mdbook_shared::Page<Self>;
@@ -75,7 +71,7 @@ impl AnyBookRoute for router_blog::BookRoute {
         "blog"
     }
     fn full_version() -> &'static str {
-        "blog"
+        "Blog"
     }
     fn index() -> Self {
         todo!()
@@ -113,10 +109,50 @@ impl AnyBookRoute for router_learn::BookRoute {
         "learn"
     }
     fn full_version() -> &'static str {
-        "learn"
+        "Learn"
     }
     fn index() -> Self {
         Self::Index {
+            section: Default::default(),
+        }
+    }
+}
+
+impl AnyBookRoute for router_resources::BookRoute {
+    fn sections(&self) -> &[use_mdbook::mdbook_shared::Section] {
+        self.sections()
+    }
+
+    fn page(&self) -> &use_mdbook::mdbook_shared::Page<Self> {
+        self.page()
+    }
+
+    fn global_route(&self) -> crate::Route {
+        crate::Route::Resources { child: *self }
+    }
+
+    fn page_id(&self) -> use_mdbook::mdbook_shared::PageId {
+        self.page_id()
+    }
+    fn book() -> &'static MdBook<Self> {
+        &*router_resources::LAZY_BOOK
+    }
+
+    fn use_current() -> Option<Self> {
+        let route = use_route();
+        match route {
+            Route::Resources { child } => Some(child),
+            _ => None,
+        }
+    }
+    fn short_version() -> &'static str {
+        "resources"
+    }
+    fn full_version() -> &'static str {
+        "Resources"
+    }
+    fn index() -> Self {
+        Self::YoutubeChannels {
             section: Default::default(),
         }
     }

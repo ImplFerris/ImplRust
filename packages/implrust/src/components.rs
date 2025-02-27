@@ -14,3 +14,6 @@ pub mod notfound;
 pub use notfound::*;
 pub mod search;
 pub use search::*;
+
+pub mod resources_index;
+pub use resources_index::*;
