@@ -161,7 +161,7 @@ fn SearchModal() -> Element {
         // Only show search results from the version of the docs the user is currently on (or the latest if they
         // are not on a doc page)
         let docs_index_version = match &current_route {
-            Route::Docs06 { .. } => "0_6",
+            Route::LearnMd { .. } => "0_6",
             _ => "0_6",
         };
 
@@ -287,7 +287,7 @@ fn SearchResults(results: Signal<Results>, search_text: Signal<String>) -> Eleme
     let results = results
         .iter()
         .filter(|route| match route.route {
-            Route::Docs06 { .. } => {
+            Route::LearnMd { .. } => {
                 true
                 // !matches!(cur_route, Route::Docs03 { .. })
                 //     && !matches!(cur_route, Route::Docs04 { .. })

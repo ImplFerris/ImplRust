@@ -169,7 +169,7 @@ pub enum Route {
 
         #[layout(Learn)]
             #[child("/learn")]
-                Docs06 { child: crate::docs::router_learn::BookRoute },
+                LearnMd { child: crate::docs::router_learn::BookRoute },
         #[end_layout]
     #[end_nest]
 
@@ -177,7 +177,7 @@ pub enum Route {
         let joined = segments.join("/");
         let docs_route = format!("/{}", joined.trim_matches('/'));
         let child = crate::docs::router_learn::BookRoute::from_str(&joined).unwrap_or_else(|_| crate::docs::router_learn::BookRoute::Index { section: Default::default() });
-        Route::Docs06 { child }
+        Route::LearnMd { child }
     })]
     #[route("/:..segments")]
     Err404 { segments: Vec<String> },
@@ -185,11 +185,11 @@ pub enum Route {
 
 impl Route {
     fn is_docs(&self) -> bool {
-        matches!(self, Route::Docs06 { .. })
+        matches!(self, Route::LearnMd { .. })
     }
 
     fn is_latest_docs(&self) -> bool {
-        matches!(self, Route::Docs06 { .. })
+        matches!(self, Route::LearnMd { .. })
     }
 }
 

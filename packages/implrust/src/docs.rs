@@ -20,7 +20,7 @@ impl CurrentDocsVersion {
 pub fn use_try_current_docs_version() -> Option<CurrentDocsVersion> {
     let route = use_route();
     match route {
-        Route::Docs06 { child } => Some(CurrentDocsVersion::V06(child)),
+        Route::LearnMd { child } => Some(CurrentDocsVersion::V06(child)),
         _ => None,
     }
 }
@@ -88,7 +88,7 @@ impl AnyBookRoute for router_learn::BookRoute {
     }
 
     fn global_route(&self) -> crate::Route {
-        crate::Route::Docs06 { child: *self }
+        crate::Route::LearnMd { child: *self }
     }
 
     fn page_id(&self) -> use_mdbook::mdbook_shared::PageId {
@@ -101,7 +101,7 @@ impl AnyBookRoute for router_learn::BookRoute {
     fn use_current() -> Option<Self> {
         let route = use_route();
         match route {
-            Route::Docs06 { child } => Some(child),
+            Route::LearnMd { child } => Some(child),
             _ => None,
         }
     }

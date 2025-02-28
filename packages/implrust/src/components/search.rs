@@ -5,7 +5,7 @@ pub fn generate_search_index() {
 
         std::env::set_var("CARGO_MANIFEST_DIR", static_dir().join("assets"));
         let version_filter: [(&str, fn(&Route) -> bool); 1] =
-            [("0_6", |route| matches!(route, Route::Docs06 { .. }))];
+            [("0_6", |route| matches!(route, Route::LearnMd { .. }))];
         for (version, filter) in version_filter {
             dioxus_search::SearchIndex::<Route>::create(
                 format!("searchable_{version}"),
