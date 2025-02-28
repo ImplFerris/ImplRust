@@ -152,7 +152,7 @@ impl AnyBookRoute for router_resources::BookRoute {
         "Resources"
     }
     fn index() -> Self {
-        Self::YoutubeChannels {
+        Self::Index {
             section: Default::default(),
         }
     }
