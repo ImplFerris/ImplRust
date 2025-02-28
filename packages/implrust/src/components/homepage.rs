@@ -7,6 +7,9 @@ pub(crate) fn Homepage() -> Element {
     rsx! {
         div { class: "w-full",
             hero::Hero {}
+            div {  id: "featured",
+                FeaturedWidgets {}
+            }
         }
     }
 }

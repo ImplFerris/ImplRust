@@ -1,15 +1,6 @@
 use crate::*;
 
 #[component]
-pub(crate) fn ResourcesIndex() -> Element {
-    rsx! {
-        div { class: "w-full",
-            FeaturedWidgets {}
-        }
-    }
-}
-
-#[component]
 pub(crate) fn FeaturedWidgets() -> Element {
     let widgets = vec![
         (

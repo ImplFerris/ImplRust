@@ -153,9 +153,6 @@ pub enum Route {
         #[route("/")]
         Homepage {},
 
-        #[route("/resources")]
-        ResourcesIndex {},
-
         #[layout(Resources)]
             #[child("/resources/")]
                 Resources { child: crate::docs::router_resources::BookRoute },
