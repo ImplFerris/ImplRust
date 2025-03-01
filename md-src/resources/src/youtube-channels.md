@@ -13,8 +13,6 @@ Listing popular and interesting Rust-related YouTube channels. This list is not 
 - [Dario](https://www.youtube.com/@dario.lencina): We build REAL software projects in Rust, Raspberry PI, Oculus.
 - [Semicolon](https://www.youtube.com/@Semicolon10): Covers wide range of topics including Game development, Tauri, AI & LLMs, Backend development and more.
 - [MrJakob](https://www.youtube.com/@MrJakob/playlists): Programming, Retro Computing and Hardware Tinkering; Has series on Brainf*ck Interpreter in 🦀 Rust
-- [Code to the Moon](https://youtube.com/@codetothemoon)
-- [Brooks Builds](https://youtube.com/@BrooksBuilds)
 - [No boilerplate](https://youtube.com/@NoBoilerplate)
 - [Logan smith](https://youtube.com/@_noisecode)
 - [Fio's Quest](https://www.youtube.com/@FiosQuest): Simplified and detailed beginner level lessons. 
@@ -29,6 +27,7 @@ Listing popular and interesting Rust-related YouTube channels. This list is not 
 - [Oliver Jumpertz](https://www.youtube.com/@oliverjumpertzme/videos): I'm the O in Rust, the J in JavaScript, and the OJ in System Design.
 - [MakerPnP](https://www.youtube.com/@makerpnp)
 - [Green Tea Coding](https://www.youtube.com/@GreenTeaCoding/featured): The focus of my weekly videos is on building an understanding for the fundamentals of Rust
+- [Andy Balaam](https://www.youtube.com/@ajbalaam/playlists): Rust, Raspberry Pi, Scheme Lisp, Android, Python, C++, JavaScript, Git.  
 
 ## TUI
 - [Orhun Parmaksız](https://www.youtube.com/@orhundev): Open source, Rust & terminals! 🦀
@@ -38,6 +37,15 @@ Listing popular and interesting Rust-related YouTube channels. This list is not 
 - [Copper Robotics](https://www.youtube.com/@CopperRobotics): Copper Robotics offers Purpose-built, Rust-native Software Engine solutions for Robotics. In this channel, you will get a sneak peek into development and hear directly from the minds behind the technology.
 - [floodplainnl](https://www.youtube.com/@floodplainnl): Programming talks, Rust, embedded software and other tech.
 - [shanemmattner](https://www.youtube.com/@shanemmattner)
+- [Andrei Litvin](https://www.youtube.com/@embedded-rust)
+
+## Web Development
+
+- [Genus-v Programming](https://www.youtube.com/@GenusvProgramming/playlists)
+- [Code to the Moon](https://youtube.com/@codetothemoon)
+- [Dioxus Labs](https://www.youtube.com/@DioxusLabs): Fullstack, crossplatform, lightning fast, fully typed. Dioxus is a Rust library for building apps that run on desktop, web, mobile, and more.
+- [Leptos](https://www.youtube.com/@leptos-dev):  a cutting-edge Rust framework for modern web development.
+- [Brooks Builds](https://youtube.com/@BrooksBuilds)
 
 ## Desktop Development
 - [Jacob Bolda](https://www.youtube.com/@JacobBolda): Live experimenting with code in the JavaScript and Rust ecosystems (with Tauri).
@@ -80,6 +88,7 @@ Listing popular and interesting Rust-related YouTube channels. This list is not 
 - [Rust Nation UK](https://www.youtube.com/@rustnationuk): The first conference dedicated to the Rust programming language.
 - [Oxidize Conference](https://www.youtube.com/@OxidizeConf/playlists): The Oxidize Conference is the event for applied Rust. From embedded technology in IoT medical devices to critical safety applications to vehicular dashboards written in Ferrocene.
 - [Rust Belt](https://www.youtube.com/@rustbeltrust): Rust Belt Rust is a conference about the Rust programming language held in the Rust Belt region of the US.
+- [Rust Wrocław](https://www.youtube.com/c/RustWroc%C5%82aw): Channel of Rust Wrocław group.
 
 
 ## Cryptocurrency
@@ -101,7 +110,8 @@ Listing popular and interesting Rust-related YouTube channels. This list is not 
 - [YouCodeThings](https://www.youtube.com/playlist?list=PLVT0QN6kDrbd3KZr4EkBNvjSDTaZyxwhM)
 - [Code Roamer](https://www.youtube.com/@coderoamer):  an AWS Community Builder and an open source contributor to the Rust itself.
 - [Aarambh Dev Hub](https://www.youtube.com/@AarambhDevHub):  channel for mastering Rust, Next.js and other
-
+- [Ardan Labs](https://www.youtube.com/@ardanlabs/playlists): educational content around the Go programming language, Rust, Docker & Kubernetes
+- [Stephen Blum](https://www.youtube.com/@StephenBlum/playlists): CTO at PubNub, Software Engineering, Data Mining, AI, APIs
 
 ## Non-English
 - [apakhomov](https://www.youtube.com/@apkhmv)
