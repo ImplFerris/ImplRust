@@ -114,4 +114,5 @@ Listing popular and interesting Rust-related YouTube channels. This list is not 
 - [Stephen Blum](https://www.youtube.com/@StephenBlum/playlists): CTO at PubNub, Software Engineering, Data Mining, AI, APIs
 
 ## Non-English
-- [apakhomov](https://www.youtube.com/@apkhmv)
+- [apakhomov \(Russian\)](https://www.youtube.com/@apkhmv)
+- [Aprenda Rust \(Portuguese\)](https://www.youtube.com/playlist?list=PLjSf4DcGBdiGCNOrCoFgtj0KrUq1MRUME)

@@ -81,6 +81,8 @@ A curated list of free online books about Rust, organized by category.
 
   - **[Game development with Macroquad](https://mq.agical.se/)**: A game development guide on how to build a shoot'em up game in Rust with Macroquad.
 
+## Blockchain
+  - [Building bitcoin in Rust](https://braiins.com/books/building-bitcoin-in-rust): "Building bitcoin in Rust" by Lukáš Hozda is an accessible guide for those interested in both the Rust programming language and bitcoin technology.  The e-book is free to download. You can also buy the paperback
 
 ## General
 - **[Effective Rust](https://www.lurklurk.org/effective-rust/)** : 35 Specific Ways to Improve Your Rust Code. This practical guide helps you make the transition to writing idiomatic Rust—while also making full use of Rust's type system, safety guarantees, and burgeoning ecosystem.
