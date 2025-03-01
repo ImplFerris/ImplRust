@@ -36,6 +36,7 @@ Listing popular and interesting Rust-related YouTube channels. This list is not 
 ## Embedded
 - [The Rusty Bits](https://youtube.com/@therustybits): Embedded software development in Rust 🦀
 - [Copper Robotics](https://www.youtube.com/@CopperRobotics): Copper Robotics offers Purpose-built, Rust-native Software Engine solutions for Robotics. In this channel, you will get a sneak peek into development and hear directly from the minds behind the technology.
+- [floodplainnl](https://www.youtube.com/@floodplainnl): Programming talks, Rust, embedded software and other tech.
 - [shanemmattner](https://www.youtube.com/@shanemmattner)
 
 ## Desktop Development
