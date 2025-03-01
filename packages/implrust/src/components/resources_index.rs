@@ -11,22 +11,22 @@ pub(crate) fn FeaturedWidgets() -> Element {
         (
             "Free Online Books".to_string(),
             "A curated list of free online books about Rust, organized by category.".to_string(),
-            "/resources/free-rust-books".to_string(),
+            "/resources/free-rust-books/".to_string(),
         ),
         (
             "Youtube Channels".to_string(),
             "List of popular and underrated youtube channels that covers Rust.".to_string(),
-            "/resources/youtube-channels".to_string()
+            "/resources/youtube-channels/".to_string()
         ),
         (
             "Curated List".to_string(),
             "Browse a curated selection of high-quality resources for embedded Rust programming, ideal for all developers.".to_string(),
-            "/resources/curated-list".to_string(),
+            "/resources/curated-list/".to_string(),
         ),
         (
             "Blog Posts Collection".to_string(),
             "Access insightful blog posts on various Rust topics, featuring tutorials.".to_string(),
-            "/resources/general#blog-posts".to_string(),
+            "/resources/general/#blog-posts".to_string(),
         ),
         (
             "Rust Cheat Sheet".to_string(),

@@ -154,8 +154,8 @@ pub enum Route {
         Homepage {},
 
         #[layout(Resources)]
-            #[child("/resources/")]
-                Resources { child: crate::docs::router_resources::BookRoute },
+            #[child("/resources")]
+                ResourcesRoute { child: crate::docs::router_resources::BookRoute },
         #[end_layout]
 
         #[nest("/blog")]

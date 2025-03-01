@@ -128,7 +128,7 @@ impl AnyBookRoute for router_resources::BookRoute {
     }
 
     fn global_route(&self) -> crate::Route {
-        crate::Route::Resources { child: *self }
+        crate::Route::ResourcesRoute { child: *self }
     }
 
     fn page_id(&self) -> use_mdbook::mdbook_shared::PageId {
@@ -141,7 +141,7 @@ impl AnyBookRoute for router_resources::BookRoute {
     fn use_current() -> Option<Self> {
         let route = use_route();
         match route {
-            Route::Resources { child } => Some(child),
+            Route::ResourcesRoute { child } => Some(child),
             _ => None,
         }
     }

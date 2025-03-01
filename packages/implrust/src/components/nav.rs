@@ -81,7 +81,7 @@ pub(crate) fn Nav() -> Element {
                                 to: "https://github.com/ImplFerris/implrust".to_string(),
                                 class: "flex flex-row items-center text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 gap-2",
                                 new_tab: true,
-                                span { class: "sr-only", "Dioxus on GitHub" }
+                                span { class: "sr-only", "implrust on GitHub" }
                                 crate::icons::Github2 {}
                                 // span { class: "text-xs text", CurrentStarCount {} }
                             }

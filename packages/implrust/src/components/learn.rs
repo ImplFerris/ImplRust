@@ -8,9 +8,6 @@ pub(crate) static SHOW_SIDEBAR: GlobalSignal<bool> = Signal::global(|| false);
 /// The Markdown file path needs to be appended to this, including the first slash!
 const GITHUB_API_URL: &str = "s://github.com/ImplFerris/ImplRust/contents/md-src/";
 
-/// Use this URL while loading the file-specific URL.
-const GITHUB_EDIT_PAGE_FALLBACK_URL: &str = "https://github.com/ImplFerris/ImplRust";
-
 /// The Markdown file path needs to be appended to this, including the first slash!
 const GITHUB_EDIT_PAGE_EDIT_URL: &str = "s://github.com/ImplFerris/ImplRust/edit/main/md-src/";
 
