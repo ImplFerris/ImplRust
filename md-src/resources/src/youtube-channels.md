@@ -116,3 +116,4 @@ Listing popular and interesting Rust-related YouTube channels. This list is not 
 ## Non-English
 - [apakhomov \(Russian\)](https://www.youtube.com/@apkhmv)
 - [Aprenda Rust \(Portuguese\)](https://www.youtube.com/playlist?list=PLjSf4DcGBdiGCNOrCoFgtj0KrUq1MRUME)
+- [Dot Myself \(Spanish\)](https://www.youtube.com/@dotmyself)
