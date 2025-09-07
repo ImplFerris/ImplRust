@@ -113,7 +113,7 @@ pub(crate) fn Nav() -> Element {
 //     rsx! { "{rendered_stars:.1}k" }
 // }
 
-static LINKS: &[(&str, &str)] = &[("Learn", "/learn/"), ("Blog", "/blog")];
+static LINKS: &[(&str, &str)] = &[("Learn", "/learn/"), ("Blog", "https://blog.implrust.com")];
 
 #[component]
 fn LinkList() -> Element {
