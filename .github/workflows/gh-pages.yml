@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   build-deploy:
-    runs-on: warp-ubuntu-latest-x64-8x
+    runs-on: ubuntu-latest
     env:
       CARGO_INCREMENTAL: 1
     steps:
