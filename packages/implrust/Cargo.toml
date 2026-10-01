@@ -63,3 +63,4 @@ server = [
     "dep:askama_escape",
 ]
 production = ["dioxus_site_router/production"]
+doc_test = []

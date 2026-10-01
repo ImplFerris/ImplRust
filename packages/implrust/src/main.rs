@@ -24,17 +24,17 @@ fn main() {
     dioxus::LaunchBuilder::new()
         .with_cfg(server_only! {
             // Only in release do we SSG
-            let mut cfg = ServeConfig::builder();
+            let cfg = ServeConfig::builder();
 
             if !cfg!(debug_assertions) {
-                cfg = cfg.incremental(
-                    IncrementalRendererConfig::new()
+                cfg.incremental(
+                    dioxus::server::IncrementalRendererConfig::new()
                         .static_dir(static_dir())
                         .clear_cache(false)
-                );
+                )
+            } else {
+                cfg
             }
-
-            cfg.build().expect("Unable to build ServeConfig")
         })
         .launch(|| {
             rsx! {
