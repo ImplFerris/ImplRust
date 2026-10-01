@@ -8,13 +8,12 @@ resolver = "2"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dioxus = { version = "0.6.0", features = ["router", "launch"] }
-dioxus-web = { version = "0.6.0", features = ["hydrate"], optional = true }
+dioxus = { version = "0.7.0", features = ["router", "launch"] }
+dioxus-web = { version = "0.7.0", features = ["hydrate"], optional = true }
 
 dioxus_site_router = { workspace = true }
 
-dioxus-material-icons = { version = "3.0.0" }
-syntect-html = { workspace = true }
+# syntect-html = { workspace = true }
 mdbook-shared = { workspace = true }
 use-mdbook = { workspace = true }
 dioxus-search = { workspace = true }
@@ -58,6 +57,7 @@ fullstack = ["dioxus/fullstack", "dioxus_site_router/fullstack"]
 web = ["dioxus/web", "dioxus_site_router/web"]
 server = [
     "dioxus/server",
+    "dioxus/fullstack",
     "dioxus/ssr",
     "dioxus_site_router/server",
     "dep:askama_escape",

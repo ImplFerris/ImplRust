@@ -9,11 +9,8 @@ use std::{
 };
 
 use dioxus_rsx::{BodyNode, CallBody, TemplateBody};
-use pulldown_cmark::{Alignment, Event, Options, Parser, Tag};
+use pulldown_cmark::{Alignment, CodeBlockKind, Event, Options, Parser, Tag};
 use syn::{parse_quote, parse_str, Ident};
-
-use syntect::highlighting::ThemeSet;
-use syntect::parsing::SyntaxSet;
 
 use crate::{
     path_to_route_enum, path_to_route_enum_with_section, to_upper_camel_case_for_ident,
@@ -64,6 +61,7 @@ impl Section {
 pub(crate) struct ParsedMarkdown {
     pub(crate) body: CallBody,
     pub(crate) sections: Vec<Section>,
+    pub(crate) resolved_markdown: String,
 }
 
 pub fn parse_markdown(
@@ -80,6 +78,27 @@ pub fn parse_markdown(
     );
 
     let mut parser = Parser::new_ext(markdown, options);
+    let parser_by_ref = parser.by_ref().peekable();
+    let mut resolved = ResolveCodeBlock::new(path.clone(), parser_by_ref);
+    let all_resolved: Vec<_> = resolved.by_ref().collect();
+    let mut resolved_markdown = String::new();
+    pulldown_cmark_to_cmark::cmark_resume(
+        all_resolved.iter().cloned(),
+        &mut resolved_markdown,
+        Default::default(),
+    )
+    .map_err(|e| {
+        syn::Error::new(
+            Span::call_site(),
+            format!("Failed to reformat markdown: {}", e),
+        )
+    })?;
+    // Check for any errors encountered while resolving code blocks
+    if let Some(err) = resolved.errors.first() {
+        return Err(err.clone());
+    }
+
+    let iter = all_resolved.iter().cloned().peekable();
 
     let mut rsx_parser = RsxMarkdownParser {
         element_stack: vec![],
@@ -87,7 +106,7 @@ pub fn parse_markdown(
         current_table: vec![],
         sections: vec![],
         in_table_header: false,
-        iter: parser.by_ref().peekable(),
+        iter,
         book_path,
         path,
         phantom: std::marker::PhantomData,
@@ -102,10 +121,12 @@ pub fn parse_markdown(
     } else {
         CallBody::new(TemplateBody::new(rsx_parser.root_nodes))
     };
+    let sections = rsx_parser.sections;
 
     Ok(ParsedMarkdown {
         body,
-        sections: rsx_parser.sections,
+        sections,
+        resolved_markdown,
     })
 }
 
@@ -134,7 +155,13 @@ impl<'a, I: Iterator<Item = Event<'a>>> RsxMarkdownParser<'a, I> {
             pulldown_cmark::Event::Start(start) => {
                 self.start_element(start)?;
             }
-            pulldown_cmark::Event::End(_) => self.end_node(),
+            pulldown_cmark::Event::End(tag_end) => {
+                // HtmlBlock Start doesn't push a node, so don't pop for its End either.
+                // Our <details> handling pushes via Html events instead.
+                if !matches!(tag_end, pulldown_cmark::TagEnd::HtmlBlock) {
+                    self.end_node();
+                }
+            }
             pulldown_cmark::Event::Text(text) => {
                 let text = escape_text(&text);
                 self.create_node(BodyNode::Text(parse_quote!(#text)));
@@ -147,14 +174,29 @@ impl<'a, I: Iterator<Item = Event<'a>>> RsxMarkdownParser<'a, I> {
                     }
                 })
             }
-            pulldown_cmark::Event::Html(node) => {
-                let code = escape_text(&node);
-                self.create_node(parse_quote! {
-                    p {
-                        class: "inline-html-block",
-                        dangerous_inner_html: #code,
-                    }
-                })
+            pulldown_cmark::Event::Html(node) | pulldown_cmark::Event::InlineHtml(node) => {
+                let trimmed = node.trim();
+                if trimmed == "<details>" {
+                    self.start_node(parse_quote! {
+                        details {}
+                    });
+                } else if trimmed == "</details>" {
+                    self.end_node();
+                } else if trimmed.starts_with("<summary>") && trimmed.ends_with("</summary>") {
+                    let inner = &trimmed["<summary>".len()..trimmed.len() - "</summary>".len()];
+                    let inner = escape_text(inner);
+                    self.create_node(parse_quote! {
+                        summary { #inner }
+                    });
+                } else {
+                    let code = escape_text(&node);
+                    self.create_node(parse_quote! {
+                        p {
+                            class: "inline-html-block",
+                            dangerous_inner_html: #code,
+                        }
+                    })
+                }
             }
             pulldown_cmark::Event::FootnoteReference(_) => {}
             pulldown_cmark::Event::SoftBreak => {}
@@ -165,6 +207,7 @@ impl<'a, I: Iterator<Item = Event<'a>>> RsxMarkdownParser<'a, I> {
             pulldown_cmark::Event::TaskListMarker(value) => {
                 self.write_checkbox(value);
             }
+            _ => {}
         }
         Ok(())
     }
@@ -179,22 +222,6 @@ impl<'a, I: Iterator<Item = Event<'a>>> RsxMarkdownParser<'a, I> {
                 value: #type_value,
             }
         })
-    }
-
-    fn take_code_or_text(&mut self) -> String {
-        let mut current_text = String::new();
-        loop {
-            match self.iter.peek() {
-                Some(pulldown_cmark::Event::Code(text) | pulldown_cmark::Event::Text(text)) => {
-                    current_text += text;
-                    self.iter.next().unwrap();
-                }
-                // Ignore any softbreaks
-                Some(pulldown_cmark::Event::SoftBreak) => {}
-                _ => break,
-            }
-        }
-        current_text
     }
 
     fn write_text(&mut self) {
@@ -273,7 +300,7 @@ impl<'a, I: Iterator<Item = Event<'a>>> RsxMarkdownParser<'a, I> {
                 });
                 self.write_text();
             }
-            Tag::Heading(level, _, _) => {
+            Tag::Heading { level, .. } => {
                 let text = self.take_text();
                 let section = Section::new(&text);
                 let variant = section.variant();
@@ -311,25 +338,31 @@ impl<'a, I: Iterator<Item = Event<'a>>> RsxMarkdownParser<'a, I> {
                 };
                 self.start_node(element);
             }
-            Tag::BlockQuote => {
+            Tag::BlockQuote { .. } => {
                 self.start_node(parse_quote! {
                     blockquote {}
                 });
                 self.write_text();
             }
             Tag::CodeBlock(kind) => {
-                let lang = match kind {
+                let mut fname = None;
+                let lang: Option<pulldown_cmark::CowStr<'_>> = match kind {
                     pulldown_cmark::CodeBlockKind::Indented => None,
-                    pulldown_cmark::CodeBlockKind::Fenced(lang) => {
+                    pulldown_cmark::CodeBlockKind::Fenced(mut lang) => {
+                        if let Some((language, file)) = lang.split_once('@') {
+                            fname = Some(file.to_string());
+                            lang = language.to_string().into();
+                        }
                         (!lang.is_empty()).then_some(lang)
                     }
                 };
-                let raw_code = self.take_code_or_text();
+                let raw_code = take_code_or_text(&mut self.iter);
 
                 if lang.as_deref() == Some("inject-dioxus") {
                     self.start_node(parse_str::<BodyNode>(&raw_code).unwrap());
                 } else {
-                    let (fname, html) = build_codeblock(raw_code, &self.path)?;
+                    let source = highlighted_source_tokens(raw_code.trim_end(), lang.as_deref());
+
                     let fname = if let Some(fname) = fname {
                         quote! { name: #fname.to_string() }
                     } else {
@@ -338,7 +371,7 @@ impl<'a, I: Iterator<Item = Event<'a>>> RsxMarkdownParser<'a, I> {
 
                     self.start_node(parse_quote! {
                         CodeBlock {
-                            contents: #html,
+                            source: #source,
                             #fname
                         }
                     });
@@ -388,7 +421,12 @@ impl<'a, I: Iterator<Item = Event<'a>>> RsxMarkdownParser<'a, I> {
             Tag::Strikethrough => self.start_node(parse_quote! {
                 s {}
             }),
-            Tag::Link(ty, dest, title) => {
+            Tag::Link {
+                link_type: ty,
+                dest_url: dest,
+                title,
+                ..
+            } => {
                 let href = match ty {
                     pulldown_cmark::LinkType::Email => format!("mailto:{}", dest).to_token_stream(),
                     _ => {
@@ -502,7 +540,11 @@ impl<'a, I: Iterator<Item = Event<'a>>> RsxMarkdownParser<'a, I> {
 
                 self.write_text();
             }
-            Tag::Image(_, dest, title) => {
+            Tag::Image {
+                dest_url: dest,
+                title,
+                ..
+            } => {
                 let alt = escape_text(&self.take_text());
                 let dest: &str = &dest;
                 let title = escape_text(&title);
@@ -529,7 +571,7 @@ impl<'a, I: Iterator<Item = Event<'a>>> RsxMarkdownParser<'a, I> {
                     quote::quote!(#dest)
                 };
 
-                if dest.ends_with(".mp4") || dest.ends_with(".mov") {
+                if dest.ends_with(".mp4") || dest.ends_with(".mov") || dest.ends_with(".webm") {
                     self.start_node(parse_quote! {
                         video {
                             src: #url,
@@ -552,6 +594,7 @@ impl<'a, I: Iterator<Item = Event<'a>>> RsxMarkdownParser<'a, I> {
                     })
                 }
             }
+            _ => {}
         }
         Ok(())
     }
@@ -590,22 +633,22 @@ impl<'a, I: Iterator<Item = Event<'a>>> RsxMarkdownParser<'a, I> {
         if let (Some(BodyNode::Text(last_text)), BodyNode::Text(new_text)) =
             (element_list.last_mut(), &node)
         {
-            if !last_text
+            if last_text
                 .input
                 .source
                 .value()
                 .chars()
                 .last()
                 .filter(|c| c.is_whitespace())
-                .is_some()
-                && !new_text
+                .is_none()
+                && new_text
                     .input
                     .source
                     .value()
                     .chars()
                     .next()
                     .filter(|c| c.is_whitespace())
-                    .is_some()
+                    .is_none()
             {
                 element_list.push(parse_quote! { " " });
             }
@@ -619,27 +662,139 @@ impl<'a, I: Iterator<Item = Event<'a>>> RsxMarkdownParser<'a, I> {
     }
 }
 
-fn build_codeblock(
-    raw_code: String,
-    path: &PathBuf,
-) -> Result<(Option<String>, String), syn::Error> {
-    let mut fname = None;
-    let code = transform_code_block(&path, raw_code, &mut fname)?;
-    static THEME: once_cell::sync::Lazy<syntect::highlighting::Theme> =
-        once_cell::sync::Lazy::new(|| {
-            let raw = include_str!("../themes/MonokaiDark.thTheme").to_string();
-            let mut reader = std::io::Cursor::new(raw.clone());
-            ThemeSet::load_from_reader(&mut reader).unwrap()
-        });
+fn take_code_or_text<'a, I: Iterator<Item = Event<'a>>>(iter: &mut Peekable<I>) -> String {
+    let mut current_text = String::new();
+    loop {
+        match iter.peek() {
+            Some(pulldown_cmark::Event::Code(text) | pulldown_cmark::Event::Text(text)) => {
+                current_text += text;
+                iter.next().unwrap();
+            }
+            // Ignore any softbreaks
+            Some(pulldown_cmark::Event::SoftBreak) => {}
+            _ => break,
+        }
+    }
+    current_text
+}
 
-    let ss = SyntaxSet::load_defaults_newlines();
-    let syntax = ss.find_syntax_by_extension("rs").unwrap();
-    let html =
-        syntect::html::highlighted_html_for_string(code.trim_end(), &ss, syntax, &THEME).unwrap();
+// Modifies the event stream to resolve include statements in code blocks
+pub(crate) struct ResolveCodeBlock<'a, I: Iterator<Item = Event<'a>>> {
+    path: PathBuf,
+    iter: Peekable<I>,
+    queued_events: Vec<Event<'a>>,
+    errors: Vec<syn::Error>,
+}
 
-    let html = escape_text(&html);
+impl<'a, I: Iterator<Item = Event<'a>>> ResolveCodeBlock<'a, I> {
+    fn new(path: PathBuf, iter: Peekable<I>) -> Self {
+        Self {
+            path,
+            iter,
+            queued_events: Vec::new(),
+            errors: Vec::new(),
+        }
+    }
+}
 
-    Ok((fname, html))
+impl<'a, I: Iterator<Item = Event<'a>>> Iterator for ResolveCodeBlock<'a, I> {
+    type Item = Event<'a>;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if let Some(event) = self.queued_events.pop() {
+            return Some(event);
+        }
+        match self.iter.next() {
+            Some(Event::Start(Tag::CodeBlock(mut kind))) => {
+                let raw_code = take_code_or_text(&mut self.iter);
+                let mut fname = None;
+                let is_include = raw_code.starts_with("{{#include");
+
+                // Resolve any embedded include statements
+                let code = match transform_code_block(&self.path, raw_code, &mut fname) {
+                    Ok(code) => code,
+                    Err(err) => {
+                        self.errors.push(err);
+                        return None;
+                    }
+                };
+
+                // If the code block is fenced, add the file name after the language
+                if let (Some(fname), CodeBlockKind::Fenced(lang)) = (fname, &kind) {
+                    // If the kind already contains a path, don't add it again
+                    if !lang.contains('@') {
+                        kind = CodeBlockKind::Fenced(
+                            format!(
+                                "{}@{}",
+                                if !is_include {
+                                    lang.as_ref()
+                                } else {
+                                    "rs".into()
+                                },
+                                fname
+                            )
+                            .into(),
+                        );
+                    }
+                }
+
+                // Queue the text event next
+                self.queued_events.push(Event::Text(code.into()));
+
+                // Output an event with the resolved code block and path in parenthesis
+                Some(Event::Start(Tag::CodeBlock(kind)))
+            }
+            e => e,
+        }
+    }
+}
+
+fn highlighted_source_tokens(code: &str, lang: Option<&str>) -> TokenStream2 {
+    let Some(variant) = language_variant_ident(lang) else {
+        // Unknown/plain text: emit empty highlight spans so no tokens are styled.
+        // `Language` has no `PlainText` variant; the tag is unused when spans are empty,
+        // so we pick `Rust` arbitrarily as the metadata placeholder.
+        return quote! {{
+            ::dioxus_code::advanced::HighlightedSource::from_static_parts(
+                #code,
+                ::dioxus_code::Language::Rust,
+                &[],
+            )
+        }};
+    };
+    quote! {{
+        ::dioxus_code::code_str!(
+            #code,
+            ::dioxus_code::CodeOptions::builder()
+                .with_language(::dioxus_code::Language::#variant)
+        )
+    }}
+}
+
+fn language_variant_ident(lang: Option<&str>) -> Option<Ident> {
+    let lang = lang?
+        .trim()
+        .split(|ch: char| ch.is_whitespace() || ch == ',')
+        .next()?
+        .to_ascii_lowercase();
+
+    let variant = match lang.as_str() {
+        "bash" | "sh" | "shell" => "Bash",
+        "batch" | "cmd" => "Batch",
+        "css" => "Css",
+        "dockerfile" => "Dockerfile",
+        "html" => "Html",
+        "javascript" | "js" => "JavaScript",
+        "json" => "Json",
+        "lua" => "Lua",
+        "powershell" => "PowerShell",
+        "rs" | "rust" => "Rust",
+        "toml" => "Toml",
+        "jsx" | "tsx" => "Tsx",
+        "yaml" | "yml" => "Yaml",
+        _ => return None,
+    };
+    Some(Ident::new(variant, Span::call_site()))
 }
 
 fn transform_code_block(
@@ -648,7 +803,6 @@ fn transform_code_block(
     fname: &mut Option<String>,
 ) -> syn::Result<String> {
     let segments = code_contents.split("{{#include");
-    let segments = segments;
     let mut output = String::new();
     for (i, segment) in segments.enumerate() {
         // Skip the first segment which is before the first include
@@ -780,8 +934,7 @@ Some assets:
 
     let out: syn::File = parse_quote! {
         #[component(no_case_check)]
-        pub fn Hmm() -> dioxus::prelude::Element {
-            use dioxus::prelude::*;
+        pub fn Hmm() -> Element {
             rsx! {
                 #tokens_out
             }
@@ -942,24 +1095,4 @@ fn syn_parsing_race() {
 
     println!("{:?}", out_toks1);
     println!("{:?}", out_toks2);
-}
-
-#[test]
-fn parses_codeblocks() {
-    let code = r##"
-{"timestamp":"   9.927s","level":"INFO","message":"Bundled app successfully!","target":"dx::cli::bundle"}
-{"timestamp":"   9.927s","level":"INFO","message":"App produced 2 outputs:","target":"dx::cli::bundle"}
-{"timestamp":"   9.927s","level":"INFO","message":"app - [target/dx/hot_dog/bundle/macos/bundle/macos/HotDog.app]","target":"dx::cli::bundle"}
-{"timestamp":"   9.927s","level":"INFO","message":"dmg - [target/dx/hot_dog/bundle/macos/bundle/dmg/HotDog_0.1.0_aarch64.dmg]","target":"dx::cli::bundle"}
-{"timestamp":"   9.927s","level":"DEBUG","json":"{\"BundleOutput\":{\"bundles\":[\"target/dx/hot_dog/bundle/macos/bundle/macos/HotDog.app\"]}}"}
-    "##;
-
-    let (name, contents) = build_codeblock(
-        code.to_string(),
-        &PathBuf::from("../../example-book/en/chapter_1.md"),
-    )
-    .unwrap();
-
-    println!("{:?}", name);
-    println!("{}", contents);
 }

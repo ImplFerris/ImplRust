@@ -1,6 +1,15 @@
+# ignore changes to the generated docs files
+/packages/docs-03/src/docsgen.rs
+/packages/docs-04/src/docsgen.rs
+/packages/docs-05/src/docsgen.rs
+/packages/docs-06/src/docsgen.rs
+/packages/docs-07/src/docsgen.rs
+/packages/docs-blog/src/docsgen.rs
+
 /.dioxus
 /target
 .DS_Store
+._*
 
 .vscode/*
 !.vscode/settings.json
@@ -9,6 +18,7 @@
 !.vscode/extensions.json
 
 .idea
+.env
 
 /pkg
 /static
@@ -16,3 +26,5 @@
 /dist
 /dioxus_search
 /node_modules
+/package-lock.json
+/package.json

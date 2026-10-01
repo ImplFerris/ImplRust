@@ -1,3 +1,4 @@
+use std::collections::BTreeMap;
 use std::path::Path;
 use std::path::PathBuf;
 
@@ -7,7 +8,6 @@ use mdbook_shared::MdBook;
 use proc_macro2::Ident;
 use proc_macro2::Span;
 use proc_macro2::TokenStream as TokenStream2;
-use quote::format_ident;
 use quote::quote;
 use quote::ToTokens;
 use syn::LitStr;
@@ -17,16 +17,20 @@ use crate::transform_book::write_book_with_routes;
 mod rsx;
 mod transform_book;
 
+// pub fn make_docs_from_ws(version: &str) {
+//     let mdbook_dir = PathBuf::from("../../docs-src").join(version);
+//     let out_dir = std::env::current_dir().unwrap().join("src");
+//     let mut out = generate_router_build_script(mdbook_dir);
+//     out.push_str("use dioxus_docs_examples::*;\n");
+//     out.push_str("use dioxus::prelude::*;\n");
+//     let filename = format!("docsgen.rs");
+//     std::fs::write(out_dir.join(filename), out).unwrap();
+// }
+
 /// Generate the contents of the mdbook from a router
 pub fn generate_router_build_script(mdbook_dir: PathBuf) -> String {
     let file_src = generate_router_as_file(mdbook_dir.clone(), MdBook::new(mdbook_dir).unwrap());
-
-    let stringified = prettyplease::unparse(&file_src);
-    let prettifed = rustfmt_via_cli(&stringified);
-
-    let as_file = syn::parse_file(&prettifed).unwrap();
-    let fmts = dioxus_autofmt::try_fmt_file(&prettifed, &as_file, Default::default()).unwrap();
-    dioxus_autofmt::apply_formats(&prettifed, fmts)
+    prettyplease::unparse(&file_src)
 }
 
 /// Load an mdbook from the filesystem using the target tokens
@@ -64,18 +68,22 @@ pub fn generate_router_as_file(
 pub fn generate_router(mdbook_dir: PathBuf, book: mdbook_shared::MdBook<PathBuf>) -> TokenStream2 {
     let mdbook = write_book_with_routes(&book);
 
+    let mut page_markdown_map = BTreeMap::new();
+
     let book_pages = book.pages().iter().map(|(_, page)| {
         let name = path_to_route_variant(&page.url).unwrap();
 
         // Rsx doesn't work very well in macros because the path for all the routes generated point to the same characters. We manually expand rsx here to get around that issue.
         match rsx::parse_markdown(mdbook_dir.clone(), page.url.clone(), &page.raw) {
             Ok(parsed) => {
+                // insert the parsed markdown into the page_markdown map
+                page_markdown_map.insert(page.id.0, parsed.resolved_markdown);
+
                 // for the sake of readability, we want to actually convert the CallBody back to Tokens
                 let rsx = rsx::callbody_to_tokens(parsed.body);
 
                 // Create the fragment enum for the section
                 let section_enum = path_to_route_section(&page.url).unwrap();
-                let section_parse_error = format_ident!("{}ParseError", section_enum);
                 let mut error_message = format!("Invalid section name. Expected one of {}", section_enum);
                 for (i, section) in parsed.sections.iter().enumerate() {
                     if i > 0 {
@@ -102,7 +110,7 @@ pub fn generate_router(mdbook_dir: PathBuf, book: mdbook_shared::MdBook<PathBuf>
                     }
 
                     impl std::str::FromStr for #section_enum {
-                        type Err = #section_parse_error;
+                        type Err = &'static str;
 
                         fn from_str(s: &str) -> Result<Self, Self::Err> {
                             match s {
@@ -110,7 +118,7 @@ pub fn generate_router(mdbook_dir: PathBuf, book: mdbook_shared::MdBook<PathBuf>
                                 #(
                                     #section_names => Ok(Self::#section_idents),
                                 )*
-                                _ => Err(#section_parse_error)
+                                _ => Err(#error_message)
                             }
                         }
                     }
@@ -125,26 +133,13 @@ pub fn generate_router(mdbook_dir: PathBuf, book: mdbook_shared::MdBook<PathBuf>
                             }
                         }
                     }
-
-                    #[derive(Debug)]
-                    pub struct #section_parse_error;
-
-                    impl std::fmt::Display for #section_parse_error {
-                        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                            f.write_str(#error_message)?;
-                            Ok(())
-                        }
-                    }
-
-                    impl std::error::Error for #section_parse_error {}
                 };
 
                 quote! {
                     #fragment
 
                     #[component(no_case_check)]
-                    pub fn #name(section: #section_enum) -> dioxus::prelude::Element {
-                        use dioxus::prelude::*;
+                    pub fn #name(section: #section_enum) -> Element {
                         rsx! {
                             #rsx
                         }
@@ -154,6 +149,7 @@ pub fn generate_router(mdbook_dir: PathBuf, book: mdbook_shared::MdBook<PathBuf>
             Err(err) => err.to_compile_error(),
         }
     });
+    let book_pages = quote! {#(#book_pages)*};
 
     let default_impl = book
         .pages()
@@ -200,15 +196,38 @@ pub fn generate_router(mdbook_dir: PathBuf, book: mdbook_shared::MdBook<PathBuf>
         }
     });
 
-    quote! {
-        use dioxus::prelude::*;
+    let page_markdown = {
+        let match_page = page_markdown_map.iter().map(|(id, markdown)| {
+            let id = *id;
+            quote! {
+                #id => #markdown,
+            }
+        });
 
-        #[derive(Clone, Copy, dioxus_router::prelude::Routable, PartialEq, Eq, Hash, Debug, serde::Serialize, serde::Deserialize)]
+        quote! {
+            /// Get the markdown for a page by its ID
+            pub const fn page_markdown(id: use_mdbook::mdbook_shared::PageId) -> &'static str {
+                match id.0 {
+                    #(
+                        #match_page
+                    )*
+                    _ => {
+                        panic!("Invalid page ID:")
+                    }
+                }
+            }
+        }
+    };
+
+    quote! {
+        #[derive(Clone, Copy, dioxus_router::Routable, PartialEq, Eq, Hash, Debug, serde::Serialize, serde::Deserialize)]
         pub enum BookRoute {
             #(#book_routes)*
         }
 
         impl BookRoute {
+            #page_markdown
+
             pub fn sections(&self) -> &'static [use_mdbook::mdbook_shared::Section] {
                 &self.page().sections
             }
@@ -232,9 +251,7 @@ pub fn generate_router(mdbook_dir: PathBuf, book: mdbook_shared::MdBook<PathBuf>
             #mdbook
         });
 
-        #(
-            #book_pages
-        )*
+        #book_pages
     }
 }
 
@@ -310,21 +327,4 @@ pub(crate) fn path_to_route_enum_with_section(
             section: #section::#section_variant
         }
     })
-}
-
-fn rustfmt_via_cli(input: &str) -> String {
-    let tmpfile = std::env::temp_dir().join(format!("mdbook-gen-{}.rs", std::process::id()));
-    std::fs::write(&tmpfile, input).unwrap();
-
-    let file = std::fs::File::open(&tmpfile).unwrap();
-    let output = std::process::Command::new("rustfmt")
-        .arg("--edition=2021")
-        .stdin(file)
-        .stdout(std::process::Stdio::piped())
-        .output()
-        .unwrap();
-
-    _ = std::fs::remove_file(tmpfile);
-
-    String::from_utf8(output.stdout).unwrap()
 }

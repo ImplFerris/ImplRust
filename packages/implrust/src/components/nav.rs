@@ -1,8 +1,40 @@
 use crate::docs::AnyBookRoute;
 use crate::*;
 use dioxus::html::input_data::keyboard_types::Key;
-use dioxus_material_icons::{MaterialIcon, MaterialIconColor};
 use std::ops::Deref;
+
+#[derive(Props, Clone, PartialEq)]
+struct MaterialIconProps {
+    #[props(into)]
+    name: String,
+    size: Option<u32>,
+    color: Option<MaterialIconColor>,
+}
+
+#[derive(Clone, PartialEq)]
+enum MaterialIconColor {
+    Dark,
+    Light,
+}
+
+#[component]
+fn MaterialIcon(props: MaterialIconProps) -> Element {
+    let MaterialIconProps { name, size, color } = props;
+    let color = match color {
+        Some(MaterialIconColor::Dark) => "rgba(0, 0, 0, 0.54)",
+        Some(MaterialIconColor::Light) => "rgba(255, 255, 255, 1)",
+        None => "inherit",
+    };
+    let size = size.map(|size| format!("{size}px")).unwrap_or_else(|| "inherit".into());
+
+    rsx! {
+        span {
+            class: "material-icons material-icons-outlined material-icons-round material-icons-sharp material-icons-two-tone md-48",
+            style: "font-size: {size}; color: {color}; user-select: none;",
+            "{name}"
+        }
+    }
+}
 
 pub(crate) static SHOW_SEARCH: GlobalSignal<bool> = Signal::global(|| false);
 
