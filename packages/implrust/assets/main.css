@@ -119,6 +119,137 @@ It's so unliklely anyone is copying text on mobile that we can just hide it
   all: revert;
 }
 
+.hero-logo {
+  font-family: "Atkinson Hyperlegible", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+
+/* Resources landing page */
+.resources-page {
+  min-height: calc(100vh - 4rem);
+  padding: clamp(3.5rem, 9vw, 7rem) 1.25rem;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(234, 88, 12, 0.12), transparent 28rem),
+    radial-gradient(circle at 90% 80%, rgba(30, 64, 175, 0.12), transparent 30rem),
+    #08090c;
+}
+
+.resources-shell {
+  width: min(100%, 1080px);
+  margin: 0 auto;
+}
+
+.resources-intro {
+  max-width: 680px;
+  margin: 0 auto clamp(2.5rem, 6vw, 4.5rem);
+  text-align: center;
+}
+
+.resources-eyebrow {
+  color: #fb923c;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+}
+
+.resources-intro h1 {
+  margin: 0.75rem 0 1rem;
+  color: #f8fafc;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+}
+
+.resources-intro p {
+  margin: 0;
+  color: #aeb9cc;
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.7;
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr));
+  gap: clamp(1.25rem, 3vw, 2rem);
+}
+
+.resource-card {
+  display: flex;
+  min-height: 208px;
+  color: inherit;
+  text-decoration: none;
+  border-radius: 0.75rem;
+  background: #1e293b;
+  box-shadow: 8px 8px 0 #ea580c;
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+}
+
+.resource-card:hover,
+.resource-card:focus-visible {
+  background: #26344d;
+  box-shadow: 11px 11px 0 #f97316;
+  transform: translate(-3px, -3px);
+}
+
+.resource-card:focus-visible {
+  outline: 3px solid #fdba74;
+  outline-offset: 4px;
+}
+
+.resource-card-content {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  padding: clamp(1.25rem, 3vw, 1.6rem);
+}
+
+.resource-card-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.resource-card h2 {
+  margin: 0;
+  color: #f8fafc;
+  font-size: 1.2rem;
+  line-height: 1.3;
+}
+
+.resource-card p {
+  margin: 0.85rem 0 0;
+  color: #cbd5e1;
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.resource-card-arrow {
+  align-self: flex-end;
+  margin-top: auto;
+  color: #fb923c;
+  font-size: 1.5rem;
+  line-height: 1;
+  transition: transform 180ms ease;
+}
+
+.resource-card:hover .resource-card-arrow,
+.resource-card:focus-visible .resource-card-arrow {
+  transform: translate(3px, 0);
+}
+
+@media (max-width: 480px) {
+  .resources-page {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .resource-card {
+    min-height: 0;
+  }
+}
+
 .dioxus-demo input button {
   border: 1px solid #ced4da;
   border-radius: 5px;

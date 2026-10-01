@@ -101,6 +101,10 @@ fn Head() -> Element {
             rel: "stylesheet",
         }
         Link {
+            href: "https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap",
+            rel: "stylesheet",
+        }
+        Link {
             rel: "stylesheet",
             href: "https://fonts.googleapis.com/icon?family=Material+Icons",
         }

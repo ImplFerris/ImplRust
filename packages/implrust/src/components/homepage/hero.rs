@@ -9,8 +9,8 @@ pub(crate) fn Hero() -> Element {
                     div { class: "text-center lg:text-left lg:flex-1",
                         div { class: "text-[2.5em] md:text-[3.5em] font-semibold dark:text-white text-ghdarkmetal font-sans leading-snug text-balance",
                             span {
-                                class: "bg-gradient-to-r text-8xl from-orange-500 to-amber-300 bg-clip-text text-transparent",
-                                "ImplRust" }
+                                class: "hero-logo bg-gradient-to-r text-8xl from-orange-500 to-amber-300 bg-clip-text text-transparent",
+                                "Impl Rust" }
                         }
                         h3 { class: "text-3xl font-bold dark:text-white py-5",
                             "Failure is not Option<T>. It's Result<T, E>"

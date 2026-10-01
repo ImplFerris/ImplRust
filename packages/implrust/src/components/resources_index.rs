@@ -36,10 +36,17 @@ pub(crate) fn FeaturedWidgets() -> Element {
     ];
 
     rsx! {
-        div { class: "flex items-center justify-center min-h-screen",
-            div { class: "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 max-w-5xl w-full",
+        main { class: "resources-page",
+            div { class: "resources-shell",
+                div { class: "resources-intro",
+                    span { class: "resources-eyebrow", "RUST RESOURCES" }
+                    h1 { "Learn Rust, your way." }
+                    p { "A hand-picked collection of projects, books, videos, and practical references for every stage of your Rust journey." }
+                }
+                div { class: "resources-grid",
                 for (title, description, link) in widgets.iter() {
                     Widget { title: title.clone(), description: description.clone(), link: link.clone() }
+                }
                 }
             }
         }
@@ -49,11 +56,13 @@ pub(crate) fn FeaturedWidgets() -> Element {
 #[component]
 pub(crate) fn Widget(title: String, description: String, link: String) -> Element {
     rsx! {
-        a{
-            href: "{link}", ">>"
-            div { class: "p-6 bg-white dark:bg-gray-800 rounded-lg shadow-[8px_8px_0px_0px_rgba(249,115,22,0.8)] w-72 h-48",
-                h2 { class: "text-xl font-semibold text-gray-900 dark:text-white", "{title}" }
-                p { class: "text-gray-600 dark:text-gray-300 mt-2", "{description}" }
+        a { class: "resource-card", href: "{link}",
+            div { class: "resource-card-content",
+                div { class: "resource-card-heading",
+                    h2 { "{title}" }
+                }
+                p { "{description}" }
+                span { class: "resource-card-arrow", aria_hidden: "true", "→" }
             }
         }
     }
